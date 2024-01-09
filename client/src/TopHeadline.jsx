@@ -10,12 +10,14 @@ const TopHeadline = () => {
     display: flex;
     align-items: center;
     justify-content: center;
+   
 
     p {
       padding: 10px;
       color: white;
       font-family: sans-serif;
       margin: 0;
+      opacity:30%;
     }
 
     @media (max-width: 786px) {

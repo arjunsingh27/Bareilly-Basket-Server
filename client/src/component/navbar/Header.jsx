@@ -45,9 +45,14 @@ background-clip: text;
 .header__searchIcon{
     padding: 5px;
     height: 22px !important;
-    background-color: #FFDD95;
+    background-color: darkgrey;
     border-top-right-radius: 50px; 
     border-bottom-right-radius: 50px; 
+}
+.header__searchIcon:hover{
+     
+    background-color: #bb34;
+     
 }
 
  @media(max-width: 768px){
