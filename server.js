@@ -1,7 +1,10 @@
 const express = require('express');
 const cors = require('cors');  // Import the cors middleware
-const productbanner = require('./api/productbanner');
-const products = require('./api/products');
+const productbanner = require('./src/api/productbanner.js');
+const products = require('./src/api/products');
+const authRoutes = require('./src/routes/authRoutes');
+const basketRoutes = require('./src/routes/basketRoutes');
+
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -16,6 +19,10 @@ app.use(cors());
 app.use(productbanner);
 
 app.use(products);
+
+app.use(authRoutes);
+
+// app.use(basketRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
