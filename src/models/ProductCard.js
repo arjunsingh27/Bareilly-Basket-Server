@@ -23,7 +23,7 @@ const productCardSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+     
   },
 });
 

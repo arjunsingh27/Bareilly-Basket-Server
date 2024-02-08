@@ -16,13 +16,13 @@ const port = 5002;
 app.use(cors());
 
 // Use the productbanner router
-app.use(productbanner);
+// app.use(productbanner);
 
 app.use(products);
 
 app.use(authRoutes);
 
-// app.use(basketRoutes);
+app.use(basketRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

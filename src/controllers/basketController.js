@@ -1,95 +1,48 @@
-// const express = require('express');
-// const router = express.Router();
-// const Basket = require('../models/Basket');
-// const mongoose = require('mongoose');
+const mongoose = require('../Config/db');
+const User = require('../models/User');
 
-// const conCheck = async () => {
-// try {
-//   // Use environment variable for the password
-//   await mongoose.connect(
-//     `mongodb+srv://arjunsingh27:Test123@cluster0.0t9vaxx.mongodb.net/BareillyBasket`,
-//     {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     }
-//   );
-//   console.log('Connected to MongoDB');
-// } catch (err) {
-//   console.error(err);
-// }
-// }
+exports.addToBasket = async (req, res) => {
+  const userId = req.params.userId;
+  const item = req.body;
 
+  try {
+    const user = await User.findById(userId);
 
-// conCheck();
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
-// // Route to add an item to the basket
-// exports.addToBasket = async (req, res) => {
-//   // Your route handling logic here
-//   try {
-//     const { userId } = req.params;
-//     const { productId, quantity } = req.body;
+    user.basket.push(item);
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 
-//     let basket = await Basket.findOne({ userId });
+exports.deleteFromBasket = async (req, res) => {
+  const userId = req.params.userId;
+  const { id } = req.body;
 
-//     if (!basket) {
-//       basket = new Basket({ userId, items: [] });
-//     }
+  try {
+    const user = await User.findById(userId);
 
-//     const existingItemIndex = basket.items.findIndex(item => item.productId.toString() === productId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
-//     if (existingItemIndex !== -1) {
-//       basket.items[existingItemIndex].quantity += quantity;
-//     } else {
-//       basket.items.push({ productId, quantity });
-//     }
+    const index = user.basket.findIndex(item => item.id === id);
 
-//     await basket.save();
+    if (index === -1) {
+      return res.status(404).json({ error: "Item not found in the user's basket" });
+    }
 
-//     res.status(201).json({ message: 'Item added to basket', addedItemId: productId });
-//   } catch (error) {
-//     console.error('Error adding item to basket:', error);
-//     res.status(500).json({ message: 'Error adding item to basket' });
-//   }
-// };
-
-// // Route to remove an item from the basket
-// exports.deleteFromBasket =  async (req, res) => {
-//   try {
-//     const { userId, itemId } = req.params;
-
-//     let basket = await Basket.findOne({ userId });
-
-//     if (!basket) {
-//       return res.status(404).json({ message: 'Basket not found' });
-//     }
-
-//     const updatedItems = basket.items.filter(item => item._id.toString() !== itemId);
-
-//     basket.items = updatedItems;
-//     await basket.save();
-
-//     res.status(200).json({ message: 'Item removed from basket', removedItemId: itemId });
-//   } catch (error) {
-//     console.error('Error removing item from basket:', error);
-//     res.status(500).json({ message: 'Error removing item from basket' });
-//   }
-// };
-
-// // Route to get all items from the basketrs
-// exports.getBasket= async (req, res) => {
-//   try {
-//     const { userId } = req.params;
-//     const basket = await Basket.findOne({ userId });
-
-//     if (!basket) {
-//       return res.status(404).json({ message: 'Basket not found' });
-//     }
-
-//     res.status(200).json({ basket });
-//   } catch (error) {
-//     console.error('Error fetching basket items:', error);
-//     res.status(500).json({ message: 'Error fetching basket items' });
-//   }
-// };
-
-// module.exports = router;
+    user.basket.splice(index, 1);
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

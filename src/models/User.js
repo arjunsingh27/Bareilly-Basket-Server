@@ -9,10 +9,37 @@ const userSchema = new mongoose.Schema({
    password: {
       type: String,
       required: true,
-   }
+   },
+   basket:[
+      {
+         id: {
+            type: Number,
+            required: true,
+         },
+       
+         title: {
+            type: String,
+            required: true,
+         },
+         url: {
+            type: String,
+            required: true,
+         },
+       
+         price: {
+            type: Number,
+            required: true,
+         },
+         rating: {
+            type: Number,
+             
+         },
+      }
+   
+   ]
 });
 
-// Create a model based on the schema
+ 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

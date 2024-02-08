@@ -1,26 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
-
-const ProductCard = require('../models/ProductCard'); // Import your ProductCard model
-
-// Connect to MongoDB
-async function conCheck() {
-  try {
-    await mongoose.connect(
-      'mongodb+srv://your-username:your-password@cluster0.0t9vaxx.mongodb.net/BareillyBasket',
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
-    console.log('Connected to MongoDB');
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-conCheck();
+const mongoose = require('../Config/db'); // Import mongoose from db.js
+const ProductCard = require('../models/ProductCard');
 
 // Endpoint to fetch products from the database
 router.get('/api/products', async (req, res) => {

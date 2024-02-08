@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+ 
 
 // Controller function to handle user registration
 exports.register = async (req, res) => {
