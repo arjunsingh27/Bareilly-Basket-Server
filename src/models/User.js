@@ -35,11 +35,17 @@ const userSchema = new mongoose.Schema({
              
          },
       }
-   
+   ],
+   orders:[
+      {
+         orderID: String,
+         amount: Number,
+         items: Array,
+         paymentStatus: String,
+      }
    ]
 });
 
- 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
