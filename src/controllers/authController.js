@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
         // Password is correct, user is authenticated
         // Here you can generate a JWT token and send it back to the client for authentication
 
-        res.status(200).json({ userId: user._id, username: user.username ,basket: user.basket});
+        res.status(200).json({ userId: user._id, username: user.username ,basket: user.basket ,orders: user.orders});
     } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ message: 'An error occurred while logging in user' });

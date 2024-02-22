@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema({
             type: Number,
             required: true,
          },
-       
          title: {
             type: String,
             required: true,
@@ -25,14 +24,12 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true,
          },
-       
          price: {
             type: Number,
             required: true,
          },
          rating: {
             type: Number,
-             
          },
       }
    ],
@@ -40,8 +37,12 @@ const userSchema = new mongoose.Schema({
       {
          orderID: String,
          amount: Number,
-         items: Array,
+         items:  Array, // Assuming Order is defined elsewhere
          paymentStatus: String,
+         date: {
+            type: Date,
+            default: Date.now,   
+         }
       }
    ]
 });

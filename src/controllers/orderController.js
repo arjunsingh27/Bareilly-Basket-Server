@@ -55,7 +55,7 @@ exports.getOrders = async (req, res) => {
         }
 
         // Send user's orders back to the client
-        res.json({ orders: user.orders });
+        res.json({ orders : user.orders });
     } catch (error) {
         console.error("Error getting orders:", error);
         res.status(500).json({ error: "Internal server error" });
